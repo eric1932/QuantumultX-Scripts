@@ -1,5 +1,5 @@
 /*
-哔哩哔哩 去除视频流广告
+哔哩哔哩 去除小视频流广告
 
 ***************************
 QuantumultX:
@@ -24,6 +24,9 @@ hostname = app.bilibili.com
 var body = JSON.parse($response.body);
 // body: {data: {items: [idx: {ad_info & ad_type}]}}
 if (body.data && body.data.items) {
-    body.data.items = body.data.items.filter(item => item.ad_info !== undefined)
+    body.data.items = body.data.items.filter(
+        item =>
+            item.ad_info !== undefined
+    )
 }
-$done({body: JSON.stringify(body)}); 
+$done({ body: JSON.stringify(body) }); 
