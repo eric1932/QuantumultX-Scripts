@@ -35,6 +35,10 @@ const regularPathList = [
     '/x/v2/feed/index/story',
     '/x/v2/view/material',
 ];
+const proxyMode = {
+    DIRECT = 'DIRECT',
+    PROXY = 'PROXY',
+}
 
 let currentPolicyPromise = getPolicy(ruleSet);
 let url = new URL($request.url);
@@ -43,9 +47,11 @@ let searchParams = url.searchParams;
 
 let targetArea;
 if (bangumiPathList.includes(pathName)) {
-    targetArea = 'PROXY';
+    // bangumi use proxy
+    targetArea = proxyMode.PROXY;
 } else if (regularPathList.includes(pathName)) {
-    targetArea = 'DIRECT';
+    // regular use direct
+    targetArea = proxyMode.DIRECT;
 }
 
 currentPolicyPromise.then(currentPolicy => {
