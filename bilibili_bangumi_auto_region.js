@@ -59,11 +59,11 @@ currentPolicyPromise.then(currentPolicy => {
     } else {
         setPolicy(targetArea).then((change) => {
             let message = SwitchStatus(change, targetArea);
-            if (notify) {
+            // if (notify) {
                 $notify('哔哩哔哩番剧切换', '', message);
-            } else {
+            // } else {
                 console.log('哔哩哔哩番剧切换 ' + message);
-            }
+            // }
         }).finally(() => $done({}))
     }
 });  // TODO catch e then $done
