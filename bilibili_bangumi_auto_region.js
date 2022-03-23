@@ -36,8 +36,8 @@ const regularPathList = [
     '/x/v2/view/material',
 ];
 const proxyMode = {
-    DIRECT = 'DIRECT',
-    PROXY = 'PROXY',
+    DIRECT: 'DIRECT',
+    PROXY: 'PROXY',
 }
 
 let currentPolicyPromise = getPolicy(ruleSet);
