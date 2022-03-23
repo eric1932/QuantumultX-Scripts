@@ -55,12 +55,12 @@ if (bangumiPathList.includes(pathName)) {
 }
 
 currentPolicyPromise.then(currentPolicy => {
-    if (targetArea === undefined || targetArea === currentPolicy.toUpperCase()) {
-        if (notify) {
+    if (targetArea === undefined
+        || targetArea.localeCompare(currentPolicy, undefined, { sensitivity: 'base' }) === 0) {
+        if (notify)
             $notify('哔哩哔哩番剧切换', '', '不变');
-        } else {
+        else
             console.log('哔哩哔哩番剧切换 不变');
-        }
         $done({})
     } else {
         setPolicy(targetArea).then((change) => {
