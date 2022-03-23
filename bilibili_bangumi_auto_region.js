@@ -52,23 +52,27 @@ let pathName = url.pathname;
 let searchParams = url.searchParams;
 
 let targetArea;
-if (bangumiPathList.includes(pathname)) {
+if (bangumiPathList.includes(pathName)) {
     targetArea = 'PROXY';
-} else if (regularPathList.includes(pathname)) {
+} else if (regularPathList.includes(pathName)) {
     targetArea = 'DIRECT';
 }
-let change = await setPolicy(targetArea);
-let message = SwitchStatus(change, targetArea);
-if (notify) {
-    $notify('哔哩哔哩番剧切换', '', message);
+
+if (targetArea === undefined) {
+    $done({})
 } else {
-    console.log('哔哩哔哩番剧切换', message)
+    setPolicy(targetArea).then((change) => {
+        let message = SwitchStatus(change, targetArea);
+        if (notify) {
+            $notify('哔哩哔哩番剧切换', '', message);
+        } else {
+            console.log('哔哩哔哩番剧切换', message)
+        }
+    }).finally(() => $done({}))
 }
 
-$done($request)
-
 // --- func def ---
-function setPolicy(policy) {
+async function setPolicy(policy) {
     return new Promise((resolve) => {
         $configuration.sendMessage({
             action: "set_policy_state",
@@ -80,11 +84,11 @@ function setPolicy(policy) {
 }
 
 function SwitchStatus(status, newPolicy) {
-	if (status) {
-		return `=> ${newPolicy} => 🟢`;
-	} else if (status === 0) {
-		return `切换失败, 子策略名未填写或填写有误 ⚠️`
-	} else {
-		return `策略切换失败, 未知错误 ⚠️`
-	}
+    if (status) {
+        return `=> ${newPolicy} => 🟢`;
+    } else if (status === 0) {
+        return `切换失败, 子策略名未填写或填写有误 ⚠️`
+    } else {
+        return `策略切换失败, 未知错误 ⚠️`
+    }
 }
