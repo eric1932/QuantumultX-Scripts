@@ -36,6 +36,7 @@ const regularPathList = [
     '/x/v2/view/material',
 ];
 
+let currentPolicyPromise = getPolicy(ruleSet);
 let url = new URL($request.url);
 let pathName = url.pathname;
 let searchParams = url.searchParams;
@@ -47,20 +48,39 @@ if (bangumiPathList.includes(pathName)) {
     targetArea = 'DIRECT';
 }
 
-if (targetArea === undefined) {
-    $done({})
-} else {
-    setPolicy(targetArea).then((change) => {
-        let message = SwitchStatus(change, targetArea);
+currentPolicyPromise.then(currentPolicy => {
+    if (targetArea === undefined || targetArea === currentPolicy.toUpperCase()) {
         if (notify) {
-            $notify('哔哩哔哩番剧切换', '', message);
+            $notify('哔哩哔哩番剧切换', '', '不变');
         } else {
-            console.log('哔哩哔哩番剧切换', message)
+            console.log('哔哩哔哩番剧切换 不变');
         }
-    }).finally(() => $done({}))
-}
+        $done({})
+    } else {
+        setPolicy(targetArea).then((change) => {
+            let message = SwitchStatus(change, targetArea);
+            if (notify) {
+                $notify('哔哩哔哩番剧切换', '', message);
+            } else {
+                console.log('哔哩哔哩番剧切换 ' + message);
+            }
+        }).finally(() => $done({}))
+    }
+});  // TODO catch e then $done
 
 // --- func def ---
+async function getPolicy(groupName) {
+    return new Promise((resolve) => {
+        $configuration.sendMessage({
+            action: "get_policy_state"
+        }).then(b => {
+            if (b.ret && b.ret[groupName]) {
+                resolve(b.ret[groupName][1]);
+            } else resolve(2);
+        }, () => resolve());
+    })
+}
+
 async function setPolicy(policy) {
     return new Promise((resolve) => {
         $configuration.sendMessage({
