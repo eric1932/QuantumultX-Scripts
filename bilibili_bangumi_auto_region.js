@@ -32,7 +32,7 @@
 
 // Change these
 const ruleSet = 'StreamingSE';
-const notify = true;
+const notify = false;
 
 
 
