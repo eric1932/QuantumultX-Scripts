@@ -13,7 +13,7 @@
  * https://app.biliapi.net/x/v2/view/material
  * 
  * [rewrite_local]
- * ^https:\/\/ap(p|i)\.bili(bili|api)\.(com|net)\/(pgc\/(page\/module\/mine|view\/v2\/app\/season)|x\/v2\/(feed\/index(\/story)?|view\/material))\?access_key url script-request-header https://github.com/eric1932/QuantumultX-Scripts/raw/main/bilibili_bangumi_auto_region.js
+ * ^https?:\/\/ap(p|i)\.bili(bili|api)\.(com|net)\/(pgc\/(page\/module\/mine|view\/v2\/app\/season)|x\/v2\/(feed\/index(\/story)?|view\/material))\?access_key url script-request-header https://github.com/eric1932/QuantumultX-Scripts/raw/main/bilibili_bangumi_auto_region.js
  * 
  * [mitm]
  * hostname = ap?.biliapi.net, ap?.bilibili.com
