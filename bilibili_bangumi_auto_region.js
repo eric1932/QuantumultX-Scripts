@@ -51,7 +51,11 @@ if (bangumiPathList.includes(pathName)) {
     targetArea = proxyMode.PROXY;
 } else if (regularPathList.includes(pathName)) {
     // regular use direct
-    targetArea = proxyMode.DIRECT;
+    if (pathName !== '/pgc/page/module/mine') {  // let others go
+        targetArea = proxyMode.DIRECT;
+    } else if (searchParams.get('page') === 'bangumi-tab') {  // want query page=bangumi-tab
+        targetArea = proxyMode.DIRECT;
+    }  // else page != bangumi-tab, do not assign
 }
 
 currentPolicyPromise.then(currentPolicy => {
