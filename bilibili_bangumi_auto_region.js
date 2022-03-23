@@ -19,17 +19,6 @@
  * hostname = ap?.biliapi.net, ap?.bilibili.com
  */
 
-// var body = JSON.parse($response.body);
-// // body: {data: {items: [idx: {ad_info & ad_type}]}}
-// if (body.data && body.data.items) {
-//     body.data.items = body.data.items.filter(
-//         item =>
-//             item.ad_info === undefined
-//             && item.ad_type === undefined
-//     )
-// }
-// $done({ body: JSON.stringify(body) });
-
 // Change these
 const ruleSet = 'StreamingSE';
 const notify = false;
