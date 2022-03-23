@@ -72,7 +72,9 @@ currentPolicyPromise.then(currentPolicy => {
             // }
         }).finally(() => $done({}))
     }
-});  // TODO catch e then $done
+}).catch(_ => $done({}));
+
+
 
 // --- func def ---
 async function getPolicy(groupName) {
