@@ -35,8 +35,10 @@ var body = JSON.parse($response.body);
 if (body.data && body.data.items) {
     body.data.items = body.data.items.filter(
         item =>
-            item.ad_info === undefined  // ad_info not exist
-            && !authorReg.test(item.args.up_name)  // does not match author blacklist
+            item.ad_info === undefined  // ad_info not exist -> not an ad
+            && (!item.args  // if item.args defined, go next; else pass (keep)
+                || !item.args.up_name  // if item.args.up_name defined, go next; else pass (keep)
+                || !authorReg.test(item.args.up_name))  // filter by author blacklist; if match, filter out
     )
 };
 $done({ body: JSON.stringify(body) });
